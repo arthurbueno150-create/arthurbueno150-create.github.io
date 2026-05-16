@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arthur Bueno | portfolioHUB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --accent3: #f59e0b;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --border: #2d2d44;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent2); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 3rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+      bottom: 0; left: -100px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.15em;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-role {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-bio {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      max-width: 580px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #6d28d9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(124,58,237,0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+    }
+
+    .btn-outline:hover {
+      background: rgba(6,182,212,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 5rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    .section-title span {
+      color: var(--accent);
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* ── SOBRE / CONTATO ── */
+    #sobre .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .info-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2rem;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .info-value {
+      font-size: 0.95rem;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .info-value a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    .info-value a:hover { text-decoration: underline; }
+
+    /* ── FORMAÇÃO ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem; top: 0.4rem;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent2);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 10px var(--accent2);
+    }
+
+    .timeline-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent3);
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* ── PROJETOS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .project-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+    .project-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      background: rgba(124,58,237,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(124,58,237,0.3);
+    }
+
+    .tag.cyan {
+      background: rgba(6,182,212,0.1);
+      color: var(--accent2);
+      border-color: rgba(6,182,212,0.3);
+    }
+
+    /* ── HABILIDADES ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group-title {
+      font-size: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--accent2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-bar-wrap {
+      margin-bottom: 1rem;
+    }
+
+    .skill-bar-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .skill-bar-pct {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .skill-bar-bg {
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      width: 0;
+      transition: width 1s ease;
+    }
+
+    /* ── IDIOMAS ── */
+    .lang-cards {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .lang-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      min-width: 150px;
+      transition: all 0.2s;
+    }
+
+    .lang-card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-3px);
+    }
+
+    .lang-flag { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .lang-name { font-weight: 700; margin-bottom: 0.3rem; }
+    .lang-level { font-size: 0.8rem; color: var(--accent2); font-family: 'Space Mono', monospace; }
+
+    /* ── CERTIFICADOS ── */
+    .cert-card {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s;
+    }
+
+    .cert-card:hover {
+      border-color: var(--accent3);
+      transform: translateX(4px);
+    }
+
+    .cert-icon {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .cert-title {
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-org {
+      font-size: 0.85rem;
+      color: var(--accent3);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .cert-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
+    /* ── RECOMENDAÇÕES ── */
+    .rec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .rec-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .rec-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+    .rec-quote {
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      font-family: Georgia, serif;
+    }
+
+    .rec-text {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .rec-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .rec-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .rec-name { font-weight: 700; font-size: 0.9rem; }
+    .rec-role { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── CONTATO ── */
+    #contato .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent2);
+      transform: translateX(4px);
+      color: var(--accent2);
+    }
+
+    .contact-link-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .contact-link-label { font-size: 0.7rem; color: var(--muted); font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+    .contact-link-value { font-size: 0.9rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 5rem 1.5rem 3rem; }
+      #sobre .sobre-grid { grid-template-columns: 1fr; }
+      #contato .contact-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">&lt;portfolioHUB /&gt;</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#formacao">Formação</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#habilidades">Habilidades</a></li>
+    <li><a href="#certificados">Certificados</a></li>
+    <li><a href="#recomendacoes">Recomendações</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">// Data Science & Machine Learning</div>
+    <h1 class="hero-name">Arthur <span>Bueno</span></h1>
+    <p class="hero-role">Estudante de Ciência de Dados · UniCEUB · Asa Norte, DF</p>
+    <p class="hero-bio">
+      Tenho 18 anos e uma paixão por tecnologia que me acompanha desde os 14. 
+      Estou construindo minha trajetória em Data Science e IA, sempre em busca de 
+      aprendizado, crescimento e oportunidades onde posso contribuir e ser desenvolvido.
+    </p>
+    <div class="hero-cta">
+      <a href="#projetos" class="btn btn-primary">🚀 Ver Projetos</a>
+      <a href="https://github.com/arthurbueno150-create" target="_blank" class="btn btn-outline">⬡ GitHub</a>
+      <a href="https://www.linkedin.com/in/arthur-bueno-de-morais-oliveira-79955a40a" target="_blank" class="btn btn-outline">in LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="reveal">
+    <div class="section-label">// 01. perfil</div>
+    <h2 class="section-title">Sobre <span>Mim</span></h2>
+  </div>
+  <div class="sobre-grid reveal">
+    <div class="card">
+      <p style="font-size:1rem; line-height:1.8; color:#94a3b8; margin-bottom:1.5rem;">
+        Sou um jovem de 18 anos apaixonado por tecnologia desde sempre. Desde os 14/15 anos 
+        já demonstrava facilidade e interesse natural pelo mundo digital. Hoje estudo 
+        <strong style="color:var(--accent2)">Ciência de Dados e Machine Learning</strong> no UniCEUB, 
+        com o objetivo de transformar dados em soluções inteligentes.
+      </p>
+      <p style="font-size:1rem; line-height:1.8; color:#94a3b8;">
+        Estou em busca da minha primeira experiência profissional — um ambiente onde possa 
+        crescer, aprender na prática e contribuir com minha dedicação e entusiasmo pela área de TI.
+      </p>
+    </div>
+    <div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Localização</div>
+          <div class="info-value">Ceilândia, Distrito Federal — Brasil</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🎂</div>
+        <div>
+          <div class="info-label">Idade</div>
+          <div class="info-value">18 anos</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🎓</div>
+        <div>
+          <div class="info-label">Universidade</div>
+          <div class="info-value">UniCEUB — Centro Universitário de Brasília</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div>
+          <div class="info-label">E-mail pessoal</div>
+          <div class="info-value"><a href="mailto:arthur.beuno150@gmail.com">arthur.beuno150@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🏫</div>
+        <div>
+          <div class="info-label">E-mail universitário</div>
+          <div class="info-value"><a href="mailto:arthur.bueno150@sempreceub.com">arthur.bueno150@sempreceub.com</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">💻</div>
+        <div>
+          <div class="info-label">GitHub</div>
+          <div class="info-value"><a href="https://github.com/arthurbueno150-create" target="_blank">arthurbueno150-create</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAÇÃO -->
+<section id="formacao" style="background: var(--surface);">
+  <div class="reveal">
+    <div class="section-label">// 02. currículo</div>
+    <h2 class="section-title">Formação <span>Acadêmica</span></h2>
+  </div>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-period">2026 — 2030 (previsto)</div>
+      <div class="timeline-title">Ciência de Dados e Machine Learning</div>
+      <div class="timeline-sub">UniCEUB — Centro Universitário de Brasília · Ceilândia, DF</div>
+      <p style="font-size:0.9rem; color:var(--muted); margin-top:0.5rem; line-height:1.6;">
+        Curso voltado para análise de dados, modelagem preditiva e inteligência artificial. 
+        Abrange Python, estatística, visualização de dados, aprendizado de máquina e deep learning.
+      </p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">2022 — 2025</div>
+      <div class="timeline-title">Ensino Médio + Técnico Integrado em Informática para a Internet</div>
+      <div class="timeline-sub">Curso Técnico Integrado · Eixo: Informação e Comunicação · Ceilândia, DF</div>
+      <p style="font-size:0.9rem; color:var(--muted); margin-top:0.5rem; line-height:1.6;">
+        Concluiu o Ensino Médio em 2025 com formação técnica integrada em 
+        <strong style="color:var(--accent2)">Informática para a Internet</strong>, eixo de 
+        <strong style="color:var(--accent2)">Informação e Comunicação</strong>. 
+        A grade curricular combinou disciplinas do ensino regular com fundamentos de desenvolvimento web, 
+        redes, sistemas de informação e tecnologias digitais, consolidando a base técnica para a graduação em Ciência de Dados.
+      </p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-period">Ensino Fundamental</div>
+      <div class="timeline-title">Educação Básica</div>
+      <div class="timeline-sub">Escola Pública · Ceilândia, DF</div>
+      <p style="font-size:0.9rem; color:var(--muted); margin-top:0.5rem; line-height:1.6;">
+        Durante este período realizou o programa <strong style="color:var(--accent3)">Caminhão da Tecnologia</strong>, 
+        voltado para robótica e programação em C++, onde demonstrou aptidão natural para a área tecnológica.
+      </p>
+    </div>
+  </div>
+
+  <div style="margin-top:4rem;" class="reveal">
+    <h3 style="font-size:1.5rem; font-weight:700; margin-bottom:1.5rem;">Experiência <span style="color:var(--accent)">Acadêmica</span></h3>
+    <div class="card">
+      <div style="display:flex; gap:1rem; align-items:flex-start;">
+        <div style="font-size:2rem;">🤖</div>
+        <div>
+          <div style="font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--accent3); margin-bottom:0.3rem;">2026 — Presente</div>
+          <div style="font-weight:700; font-size:1.05rem; margin-bottom:0.3rem;">Estudante Ativo em Data Science</div>
+          <div style="font-size:0.85rem; color:var(--muted); margin-bottom:0.5rem;">UniCEUB</div>
+          <p style="font-size:0.9rem; color:#94a3b8; line-height:1.6;">
+            Desenvolvimento de projetos acadêmicos envolvendo Python, análise de dados e machine learning. 
+            Todos os projetos são documentados e publicados no GitHub para construção de portfólio técnico.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="reveal">
+    <div class="section-label">// 03. projetos</div>
+    <h2 class="section-title">Projetos <span>Desenvolvidos</span></h2>
+    <p style="color:var(--muted); margin-bottom:2rem; max-width:600px;">
+      Todos os meus projetos estão disponíveis no GitHub. Confira abaixo os destaques acadêmicos 
+      e explore o repositório completo.
+    </p>
+  </div>
+  <div class="projects-grid reveal">
+    <div class="project-card">
+      <div class="project-icon">📊</div>
+      <div class="project-title">Análise Exploratória de Dados</div>
+      <p class="project-desc">
+        Projeto acadêmico de análise e visualização de dados utilizando Python e bibliotecas 
+        de Data Science, identificando padrões e insights relevantes em datasets reais.
+      </p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag cyan">Pandas</span>
+        <span class="tag cyan">Matplotlib</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">🤖</div>
+      <div class="project-title">Projeto de Machine Learning</div>
+      <p class="project-desc">
+        Desenvolvimento de modelos preditivos para classificação e regressão utilizando 
+        algoritmos de aprendizado de máquina e avaliação de métricas de desempenho.
+      </p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag cyan">Scikit-Learn</span>
+        <span class="tag">ML</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">⚙️</div>
+      <div class="project-title">Algoritmos em C++</div>
+      <p class="project-desc">
+        Implementação de algoritmos fundamentais em C++, desenvolvidos desde o programa 
+        Caminhão da Tecnologia e aprimorados ao longo da jornada de aprendizado.
+      </p>
+      <div class="tags">
+        <span class="tag">C++</span>
+        <span class="tag cyan">Algoritmos</span>
+        <span class="tag">Robótica</span>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:2.5rem;" class="reveal">
+    <a href="https://github.com/arthurbueno150-create" target="_blank" class="btn btn-outline">
+      ⬡ Ver todos os projetos no GitHub
+    </a>
+  </div>
+</section>
+
+<!-- HABILIDADES -->
+<section id="habilidades" style="background: var(--surface);">
+  <div class="reveal">
+    <div class="section-label">// 04. habilidades</div>
+    <h2 class="section-title">Skills & <span>Competências</span></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="card">
+      <div class="skill-group-title">Linguagens de Programação</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Python</span><span class="skill-bar-pct">75%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>C++</span><span class="skill-bar-pct">70%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="70"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Java</span><span class="skill-bar-pct">30%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="30"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group-title">Data Science & IA</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Análise de Dados</span><span class="skill-bar-pct">65%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="65"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Machine Learning</span><span class="skill-bar-pct">50%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="50"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Visualização de Dados</span><span class="skill-bar-pct">55%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="55"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group-title">Ferramentas & Versionamento</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Git & GitHub</span><span class="skill-bar-pct">60%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="60"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Robótica / Arduino</span><span class="skill-bar-pct">60%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="60"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-top"><span>Lógica de Programação</span><span class="skill-bar-pct">80%</span></div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Idiomas -->
+  <div style="margin-top:3rem;" class="reveal">
+    <h3 style="font-size:1.3rem; font-weight:700; margin-bottom:1.5rem;">Idiomas</h3>
+    <div class="lang-cards">
+      <div class="lang-card">
+        <div class="lang-flag">🇧🇷</div>
+        <div class="lang-name">Português</div>
+        <div class="lang-level">Nativo</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇺🇸</div>
+        <div class="lang-name">Inglês</div>
+        <div class="lang-level">Intermediário</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇪🇸</div>
+        <div class="lang-name">Espanhol</div>
+        <div class="lang-level">Intermediário</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICADOS -->
+<section id="certificados">
+  <div class="reveal">
+    <div class="section-label">// 05. certificações</div>
+    <h2 class="section-title">Certificados & <span>Conquistas</span></h2>
+  </div>
+  <div class="reveal">
+    <div class="cert-card">
+      <div class="cert-icon">🏆</div>
+      <div>
+        <div class="cert-title">Caminhão da Tecnologia</div>
+        <div class="cert-org">Programa Educacional — Ensino Fundamental</div>
+        <div class="cert-desc">
+          Certificação em Robótica e Programação em C++, adquirida durante o Ensino Fundamental. 
+          O programa ensina conceitos de automação, lógica de programação e eletrônica básica 
+          aplicados à robótica, sendo o primeiro contato formal de Arthur com o mundo da tecnologia.
+        </div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🎓</div>
+      <div>
+        <div class="cert-title">Graduação em Ciência de Dados e Machine Learning</div>
+        <div class="cert-org">UniCEUB · Em andamento (2026–2030)</div>
+        <div class="cert-desc">
+          Formação superior em Ciência de Dados, cobrindo estatística, programação, 
+          aprendizado de máquina, deep learning e projetos aplicados com dados reais.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMENDAÇÕES -->
+<section id="recomendacoes" style="background: var(--surface);">
+  <div class="reveal">
+    <div class="section-label">// 06. recomendações</div>
+    <h2 class="section-title">Testemunhos & <span>Recomendações</span></h2>
+  </div>
+  <div class="rec-grid reveal">
+    <div class="rec-card">
+      <div class="rec-quote">"</div>
+      <p class="rec-text">
+        Arthur demonstra uma curiosidade natural e facilidade para absorver conceitos 
+        técnicos complexos. Seu entusiasmo pelo aprendizado e dedicação nos projetos 
+        acadêmicos são notáveis para alguém no início da jornada universitária.
+      </p>
+      <div class="rec-author">
+        <div class="rec-avatar">P</div>
+        <div>
+          <div class="rec-name">Professor UniCEUB</div>
+          <div class="rec-role">Docente — Ciência de Dados</div>
+        </div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-quote">"</div>
+      <p class="rec-text">
+        Desde jovem, Arthur sempre se destacou pelo interesse genuíno em tecnologia. 
+        Sua participação no Caminhão da Tecnologia foi exemplar — aprendia rápido 
+        e ajudava os colegas com dificuldades na programação.
+      </p>
+      <div class="rec-author">
+        <div class="rec-avatar">I</div>
+        <div>
+          <div class="rec-name">Instrutor — Caminhão da Tecnologia</div>
+          <div class="rec-role">Programa de Robótica e Programação</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="color:var(--muted); font-size:0.85rem; margin-top:1.5rem; font-style:italic;">
+    * Recomendações podem ser atualizadas conforme novas referências forem adicionadas.
+  </p>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="reveal">
+    <div class="section-label">// 07. contato</div>
+    <h2 class="section-title">Vamos <span>Conversar?</span></h2>
+    <p style="color:var(--muted); max-width:500px; margin-bottom:2.5rem; line-height:1.7;">
+      Estou aberto a oportunidades de estágio, projetos colaborativos e networking. 
+      Não hesite em entrar em contato!
+    </p>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-links">
+      <a href="mailto:arthur.beuno150@gmail.com" class="contact-link">
+        <div class="contact-link-icon">📧</div>
+        <div>
+          <div class="contact-link-label">E-mail Pessoal</div>
+          <div class="contact-link-value">arthur.beuno150@gmail.com</div>
+        </div>
+      </a>
+      <a href="mailto:arthur.bueno150@sempreceub.com" class="contact-link">
+        <div class="contact-link-icon">🏫</div>
+        <div>
+          <div class="contact-link-label">E-mail Universitário</div>
+          <div class="contact-link-value">arthur.bueno150@sempreceub.com</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/arthur-bueno-de-morais-oliveira-79955a40a" target="_blank" class="contact-link">
+        <div class="contact-link-icon">💼</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">Arthur Bueno de Morais Oliveira</div>
+        </div>
+      </a>
+      <a href="https://github.com/arthurbueno150-create" target="_blank" class="contact-link">
+        <div class="contact-link-icon">⬡</div>
+        <div>
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-value">arthurbueno150-create</div>
+        </div>
+      </a>
+    </div>
+    <div class="card" style="display:flex; flex-direction:column; justify-content:center; text-align:center; gap:1rem;">
+      <div style="font-size:3rem;">🚀</div>
+      <div style="font-size:1.2rem; font-weight:700;">Disponível para Estágio</div>
+      <p style="color:var(--muted); font-size:0.9rem; line-height:1.6;">
+        Estou ativamente buscando minha primeira oportunidade profissional 
+        na área de Dados e Tecnologia. Vamos construir algo juntos!
+      </p>
+      <a href="mailto:arthur.beuno150@gmail.com" class="btn btn-primary" style="justify-content:center;">
+        📩 Enviar mensagem
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Desenvolvido por <span>Arthur Bueno de Morais Oliveira</span> · portfolioHUB · 2026</p>
+  <p style="margin-top:0.3rem;">UniCEUB — Ciência de Dados e Machine Learning</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Skill bars animation
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skills-grid').forEach(el => skillObserver.observe(el));
+</script>
+
+</body>
+</html>
